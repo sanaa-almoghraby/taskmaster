@@ -5,4 +5,8 @@
     <string name="add_task2">ADD TASK</string>
     <string name="task_title">Task title</string>
     <string name="total_tasks">Total Tasks :</string>
+    <string name="setting">Setting</string>
+    <string name="task_3">Task 3</string>
+    <string name="task_1">Task 1</string>
+    <string name="name">Name</string>
 </resources>
