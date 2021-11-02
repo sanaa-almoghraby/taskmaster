@@ -5,9 +5,13 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,6 +19,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ArrayList<Task> tasksList = new ArrayList<Task>();
+        tasksList.add(new Task("task1" , "This the Lab" , "assigned"));
+        tasksList.add(new Task("task2" , "This the Challenge" , "complete"));
+        tasksList.add(new Task("task3" , "This the Reading" , "new"));
+
+        RecyclerView tasksListRecyclerView = findViewById(R.id.recyclerView);
+        tasksListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        tasksListRecyclerView.setAdapter(new TaskAdapter(tasksList));
+
 
         Button allTaskButton = findViewById(R.id.button2);
 
