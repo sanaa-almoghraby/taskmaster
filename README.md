@@ -62,3 +62,25 @@ In your MainActivity, create at least three hardcoded Task instances and use tho
 ![image description](screenshots/lab28b.png)
 ![image description](screenshots/lab28c.png)
 ![image description](screenshots/lab28d.png)
+
+*****************************************************************************************************
+# Lab: 29 - Room
+
+# Task Model and Room
+
+Following the directions provided in the Android documentation, set up Room in your application, and modify your Task class to be an Entity.
+
+Add Task Form
+Modify your Add Task form to save the data entered in as a Task in your local database.
+
+Homepage
+Refactor your homepage’s RecyclerView to display all Task entities in your database.
+
+Detail Page
+Ensure that the description and status of a tapped task are also displayed on the detail page,
+ in addition to the title. (Note that you can accomplish this by passing along the entire Task entity,
+or by passing along only its ID in the intent.)
+
+![image description](screenshots/lab29a.png)
+![image description](screenshots/lab29b.png)
+![image description](screenshots/lab29c.png)

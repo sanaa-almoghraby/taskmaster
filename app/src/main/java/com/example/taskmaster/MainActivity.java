@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,14 +21,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        List<Task> allTask = AppDatabase.getInstance(getApplicationContext()).taskDao().getAll();
+
+
         ArrayList<Task> tasksList = new ArrayList<Task>();
         tasksList.add(new Task("task1" , "This the Lab" , "assigned"));
         tasksList.add(new Task("task2" , "This the Challenge" , "complete"));
         tasksList.add(new Task("task3" , "This the Reading" , "new"));
 
+        for (Task task:allTask) {
+            tasksList.add(task);
+            
+        }
+        
         RecyclerView tasksListRecyclerView = findViewById(R.id.recyclerView);
         tasksListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        tasksListRecyclerView.setAdapter(new TaskAdapter(tasksList));
+        tasksListRecyclerView.setAdapter(new TaskAdapter(allTask));
 
 
         Button allTaskButton = findViewById(R.id.button2);
