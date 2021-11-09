@@ -2,14 +2,27 @@ package com.example.taskmaster;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.preference.PreferenceManager;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.amplifyframework.datastore.generated.model.Task;
+
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.amplifyframework.AmplifyException;
+import com.amplifyframework.api.aws.AWSApiPlugin;
+import com.amplifyframework.api.graphql.model.ModelQuery;
+import com.amplifyframework.core.Amplify;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,22 +34,55 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        List<Task> allTask = AppDatabase.getInstance(getApplicationContext()).taskDao().getAll();
 
+        try {
+            // Add these lines to add the AWSApiPlugin plugins
+            Amplify.addPlugin(new AWSApiPlugin());
+            Amplify.configure(getApplicationContext());
 
-        ArrayList<Task> tasksList = new ArrayList<Task>();
-        tasksList.add(new Task("task1" , "This the Lab" , "assigned"));
-        tasksList.add(new Task("task2" , "This the Challenge" , "complete"));
-        tasksList.add(new Task("task3" , "This the Reading" , "new"));
-
-        for (Task task:allTask) {
-            tasksList.add(task);
-            
+            Log.i("MyAmplifyApp", "Initialized Amplify");
+        } catch (AmplifyException error) {
+            Log.e("MyAmplifyApp", "Could not initialize Amplify", error);
         }
-        
+
+
+//        List<Task> allTask = AppDatabase.getInstance(getApplicationContext()).taskDao().getAll();
+
+
+//        ArrayList<Task> tasksList = new ArrayList<Task>();
+//        tasksList.add(new Task("task1" , "This the Lab" , "assigned"));
+//        tasksList.add(new Task("task2" , "This the Challenge" , "complete"));
+//        tasksList.add(new Task("task3" , "This the Reading" , "new"));
+//
+//        for (Task task:allTask) {
+//            tasksList.add(task);
+//
+//        }
         RecyclerView tasksListRecyclerView = findViewById(R.id.recyclerView);
+        Handler handler=new Handler(Looper.getMainLooper(), new Handler.Callback() {
+            @Override
+            public boolean handleMessage(@NonNull Message msg) {
+                tasksListRecyclerView.getAdapter().notifyDataSetChanged();
+                return false;
+            }
+        });
+        List <Task> tasks=new ArrayList<Task>();
+
+        Amplify.API.query(
+                ModelQuery.list(com.amplifyframework.datastore.generated.model.Task.class),
+                response -> {
+                    for (Task taskTodo : response.getData()) {
+                        tasks.add(taskTodo);
+                    }
+                    handler.sendEmptyMessage(1);
+                },
+                error -> Log.e("MyAmplifyApp", error.toString(), error)
+        );
+
+
+
         tasksListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        tasksListRecyclerView.setAdapter(new TaskAdapter(allTask));
+        tasksListRecyclerView.setAdapter(new TaskAdapter(tasks));
 
 
         Button allTaskButton = findViewById(R.id.button2);
