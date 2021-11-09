@@ -89,3 +89,16 @@ or by passing along only its ID in the intent.)
 # Test
 1. Espresso Testing : Add Espresso to your application, and use it to test basic functionality of the main components of your application
 2. Polish : Complete any remaining feature tasks from previous days’ labs.
+
+**********************************************************************************************
+## Lab: 32 - Amplify and DynamoDB
+Tasks Are Cloudy
+Using the amplify add api command, create a Task resource that replicates our existing Task schema. Update all references to the Task data to instead use AWS Amplify to access your data in DynamoDB instead of in Room.
+
+Add Task Form
+Modify your Add Task form to save the data entered in as a Task to DynamoDB.
+
+Homepage
+Refactor your homepage’s RecyclerView to display all Task entities in DynamoDB.
+![image description](screenshots/lab32.png)
+![image description](screenshots/lab32b.png)

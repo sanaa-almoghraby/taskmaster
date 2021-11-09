@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import com.amplifyframework.datastore.generated.model.Task;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,9 +34,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                 @Override
                 public void onClick(View v) {
                     Intent goToDetailsPage=new Intent(v.getContext(),Task_Detail.class);
-                    goToDetailsPage.putExtra("taskName",task.title);
-                    goToDetailsPage.putExtra("taskBody",task.body);
-                    goToDetailsPage.putExtra("taskState",task.state);
+                    goToDetailsPage.putExtra("taskName",task.getTitle());
+                    goToDetailsPage.putExtra("taskBody",task.getBody());
+                    goToDetailsPage.putExtra("taskState",task.getState());
                     v.getContext().startActivity(goToDetailsPage);
                 }
             });
@@ -62,9 +63,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         TextView body = taskViewHolder.itemView.findViewById(R.id.text2);
         TextView state = taskViewHolder.itemView.findViewById(R.id.text3);
 
-        title.setText(taskViewHolder.task.title);
-        body.setText(taskViewHolder.task.body);
-        state.setText(taskViewHolder.task.state);
+        title.setText(taskViewHolder.task.getTitle());
+        body.setText(taskViewHolder.task.getBody());
+        state.setText(taskViewHolder.task.getState());
 
     }
 
