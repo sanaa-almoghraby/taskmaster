@@ -9,19 +9,6 @@ mutation CreateTask(
     title
     body
     state
-    teams {
-      id
-      name
-      tasks {
-        nextToken
-        startedAt
-      }
-      _version
-      _deleted
-      _lastChangedAt
-      createdAt
-      updatedAt
-    }
     _version
     _deleted
     _lastChangedAt
@@ -39,19 +26,6 @@ mutation UpdateTask(
     title
     body
     state
-    teams {
-      id
-      name
-      tasks {
-        nextToken
-        startedAt
-      }
-      _version
-      _deleted
-      _lastChangedAt
-      createdAt
-      updatedAt
-    }
     _version
     _deleted
     _lastChangedAt
@@ -69,19 +43,6 @@ mutation DeleteTask(
     title
     body
     state
-    teams {
-      id
-      name
-      tasks {
-        nextToken
-        startedAt
-      }
-      _version
-      _deleted
-      _lastChangedAt
-      createdAt
-      updatedAt
-    }
     _version
     _deleted
     _lastChangedAt
