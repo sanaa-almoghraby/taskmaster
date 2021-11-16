@@ -122,5 +122,25 @@ In addition to a username, allow the user to choose their team on the Settings p
 ![image description](screenshots/lab33e.png)
 ****************************************************************************************************
 ## Lab 34: Publishing to the Play Store
-This lab is about generate an APK for the application and publishing it to the Google Play Store.
+### This lab is about generate an APK for the application and publishing it to the Google Play Store.
+****************************************************************************************************
+## Lab: 36 - Cognito
+### User Login
+Add Cognito to your Amplify setup. Add in user login and sign up flows to your application, using Cognito’s pre-built UI as appropriate. Display the logged in user’s username somewhere relevant in your app.
+### User Logout
+Allow users to log out of your application.
+
+### Main Page
+![image description](screenshots/lab36-1.png)
+### Sign Up page
+![image description](screenshots/lab36-2.png)
+![image description](screenshots/lab36-3.png)
+### Log_in
+![image description](screenshots/lab36-4.png)
+
+### AWS
+![image description](screenshots/lab36-5.png)
+
+
+
 

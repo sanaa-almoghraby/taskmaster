@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.amplifyframework.api.graphql.model.ModelMutation;
+import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
 import com.amplifyframework.datastore.AWSDataStorePlugin;
 import com.amplifyframework.datastore.generated.model.Task;
 
@@ -114,27 +115,25 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(goSetting);
             }
         });
-        Button task1 = findViewById(R.id.Task1);
-        task1.setOnClickListener((view -> {
-            String taskTitle = task1.getText().toString();
-            Intent goToTaskDetail = new Intent(MainActivity.this , Task_Detail.class);
-            goToTaskDetail.putExtra("taskName", taskTitle);
-            startActivity(goToTaskDetail);
-        }));
-        Button task2 = findViewById(R.id.Task2);
-        task2.setOnClickListener((view -> {
-            String taskTitle = task2.getText().toString();
-            Intent goToTaskDetail = new Intent(MainActivity.this , Task_Detail.class);
-            goToTaskDetail.putExtra("taskName", taskTitle);
-            startActivity(goToTaskDetail);
-        }));
-        Button task3 = findViewById(R.id.Task3);
-        task3.setOnClickListener((view -> {
-            String taskTitle = task3.getText().toString();
-            Intent taskDetail = new Intent(MainActivity.this , Task_Detail.class);
-            taskDetail.putExtra("taskName", taskTitle);
-            startActivity(taskDetail);
-        }));
+        Button signInBbutton = findViewById(R.id.signin);
+        signInBbutton.setOnClickListener(view -> {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        });
+
+        Button signUpButton = findViewById(R.id.signup);
+        signUpButton.setOnClickListener(view -> {
+            Intent intent = new Intent(this, JoinActivity.class);
+            startActivity(intent);
+        });
+
+        Button signOutButton = findViewById(R.id.signout);
+        signOutButton.setOnClickListener(view -> {
+            Amplify.Auth.signOut(
+                    () -> Log.i("AuthQuickstart", "Signed out successfully"),
+                    error -> Log.e("AuthQuickstart", error.toString())
+            );
+        });
     }
 
     @Override
@@ -162,6 +161,8 @@ public class MainActivity extends AppCompatActivity {
 
             Amplify.addPlugin(new AWSDataStorePlugin());
             Amplify.addPlugin(new AWSApiPlugin());
+            Amplify.addPlugin(new AWSCognitoAuthPlugin());
+
             Amplify.configure(getApplicationContext());
             Log.i("Main", "Initialized Amplify");
         } catch (AmplifyException error) {
