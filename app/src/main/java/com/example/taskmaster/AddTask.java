@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 import com.amplifyframework.datastore.generated.model.Task;
 
@@ -44,17 +45,24 @@ public class AddTask extends AppCompatActivity {
                 String addState=state.getText().toString();
 
 
-                Task todo = Task.builder()
-                        .title(addTitle)
-                        .body(addBody)
-                        .state(addState)
-                        .build();
+                RadioButton b1 = findViewById(R.id.team1);
+                RadioButton b2 = findViewById(R.id.team2);
+                RadioButton b3 = findViewById(R.id.team3);
 
-                Amplify.API.mutate(
-                        ModelMutation.create(todo),
-                        response -> Log.i("MyAmplifyApp", "Added Todo with id: " + response.getData().getId()),
-                        error -> Log.e("MyAmplifyApp", "Create failed", error)
-                );
+                String id = null;
+                if (b1.isChecked()) {
+                    id = "1";
+                } else if (b2.isChecked()) {
+                    id = "2";
+                } else if (b3.isChecked()) {
+                    id = "3";
+                }
+
+                dataStore(addTitle, addBody, addState, id);
+
+
+                Intent intent = new Intent(AddTask.this, MainActivity.class);
+                startActivity(intent);
 
 
 //                Task task =new Task(addTitle,addBody,addState);
@@ -69,5 +77,15 @@ public class AddTask extends AppCompatActivity {
 //                                "++++++++++++++++++++++++++++++++++++++++++++++++++");
             }
         });
+    }
+    private void dataStore(String title, String body, String state,String id) {
+        Task task = Task.builder().teamId(id).title(title).body(body).state(state).build();
+        Amplify.API.mutate(
+                ModelMutation.create(task),
+                response -> Log.i("MyAmplifyApp", "Added Todo with id: " + response.getData().getId()),
+                error -> Log.e("MyAmplifyApp", "Create failed", error)
+        );
+
+
     }
 }

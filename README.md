@@ -102,3 +102,21 @@ Homepage
 Refactor your homepage’s RecyclerView to display all Task entities in DynamoDB.
 ![image description](screenshots/lab32.png)
 ![image description](screenshots/lab32b.png)
+****************************************************************************************************
+## Lab: 33 - Related Data
+Tasks Are Owned By Teams
+Create a second entity for a team, which has a name and a list of tasks. Update your tasks to be owned by a team.
+
+Manually create three teams by running a mutation exactly three times in your code. (You do NOT need to allow the user to create new teams.)
+![image description](screenshots/lab3a.png)
+
+## Add Task Form
+Modify your Add Task form to include either a Spinner or Radio Buttons for which team that task belongs to.
+![image description](screenshots/lab33b.png)
+
+## Settings Page
+In addition to a username, allow the user to choose their team on the Settings page. Use that Team to displayonly that team’s tasks on the homepage.
+![image description](screenshots/lab33c.png)
+![image description](screenshots/lab33d.png)
+
+![image description](screenshots/lab33e.png)
