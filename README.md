@@ -120,3 +120,7 @@ In addition to a username, allow the user to choose their team on the Settings p
 ![image description](screenshots/lab33d.png)
 
 ![image description](screenshots/lab33e.png)
+****************************************************************************************************
+## Lab 34: Publishing to the Play Store
+This lab is about generate an APK for the application and publishing it to the Google Play Store.
+
