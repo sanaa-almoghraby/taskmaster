@@ -8,6 +8,9 @@
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.16822916666666668" />
         <entry key="app/src/main/res/layout/activity_add_task.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_all_tasks.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/activity_email_confirm.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/activity_join.xml" value="0.1171875" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.1171875" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_settings.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_task_detail.xml" value="0.25" />
