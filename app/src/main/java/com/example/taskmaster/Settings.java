@@ -17,7 +17,7 @@ public class Settings extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+//        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -41,11 +41,10 @@ public class Settings extends AppCompatActivity {
             else if(b3.isChecked()){
                 id="3";
             }
-
-            editor.putString("Team",id);
             editor.putString("EnteredText",name);
+            editor.putString("Team",id);
             editor.apply();
-
+            System.out.println(id+"id *********************");
         }));
     }
 }

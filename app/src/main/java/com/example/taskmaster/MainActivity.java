@@ -31,6 +31,8 @@ import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Team;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -52,20 +54,41 @@ public class MainActivity extends AppCompatActivity {
         configureAmplify();
         creatTeams();
 
+
+        List <Task> tasks=new ArrayList<Task>();
+
+// farh       SharedPreferences sharedPreferences2 = getSharedPreferences("MyPref", 0);
+//    farh    String settingsTeamID = sharedPreferences2.getString("Team",null);
+
         RecyclerView tasksListRecyclerView = findViewById(R.id.recyclerView);
 
 
-            List <Task> tasks=new ArrayList<Task>();
-
+//        if (settingsTeamID == null){
+//            tasks=GetData(tasksListRecyclerView);
+//
+//        }else if(settingsTeamID=="1") {
+//
+//            tasks=GetData2(tasksListRecyclerView,settingsTeamID);
+//
+//        }
         if(Team.equals("noTeam")){
             tasks = GetData(tasksListRecyclerView);
+            System.out.println("*****************************"+tasks);
         }
         else{
             tasks = GetData2(tasksListRecyclerView);
+            System.out.println("*****************************"+tasks);
         }
+
         Log.i("BLAAAAAAAA",tasks.toString());
         tasksListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         tasksListRecyclerView.setAdapter(new TaskAdapter(tasks));
+//        Log.i("TeamID", "Settings Team ID ===> " + settingsTeamID);
+
+
+
+
+
 
 
         Button allTaskButton = findViewById(R.id.button2);
@@ -155,15 +178,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         List<Task> foundTask=new ArrayList<>();
+
         Amplify.API.query(
-                ModelQuery.list(com.amplifyframework.datastore.generated.model.Task.class),
+                ModelQuery.list(Task.class),
                 response -> {
-                    for (com.amplifyframework.datastore.generated.model.Task todo : response.getData()) {
+                    for (Task todo : response.getData()) {
                         foundTask.add(todo);
                         foundTask.toString();
                         Log.i("MyAmplifyApp", foundTask.toString());
                         Log.i("MyAmplifyApp", "Successful query, found posts.");
                     }
+                    System.out.println("/////////////////////////////////"+foundTask);
                     handler.sendEmptyMessage(1);
                 },
                 error -> Log.e("MyAmplifyApp", "Query failure", error)
@@ -172,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
         return  foundTask;
     }
 
-    private List<Task> GetData2(RecyclerView allTaskDataRecyclerView ){
+    private List<Task> GetData2(RecyclerView allTaskDataRecyclerView){
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         String Team = sharedPreferences.getString("Team","noTeam");
         System.out.println("-------------------------------------------------------------------");
@@ -188,6 +213,7 @@ public class MainActivity extends AppCompatActivity {
         List<Task> foundTask=new ArrayList<>();
         Amplify.API.query(
                 ModelQuery.list(Task.class,Task.TEAM_ID.contains(Team)),
+
                 response -> {
                     for (Task todo : response.getData()) {
                         foundTask.add(todo);
@@ -199,8 +225,27 @@ public class MainActivity extends AppCompatActivity {
                 },
                 error -> Log.e("MyAmplifyApp", "Query failure", error)
         );
+        System.out.println(foundTask+"//////////////////////////***");
 
         return  foundTask;
+//        Amplify.API.query(
+//                ModelQuery.list(Task.class, Task.TEAM_ID.contains(Team)),
+//                response -> {
+//                    for (Task task : response.getData()) {
+//                        listOfTasks.add(task);
+//                    }
+//                    Collections.sort(listOfTasks, new Comparator<Task>() {
+//                        @Override
+//                        public int compare(Task task, Task t1) {
+//                            return Long.compare(task.getCreatedAt().toDate().getTime(), t1.getCreatedAt().toDate().getTime());
+//                        }
+//                    });
+//
+//
+//                },
+//                error -> Log.e("MyAmplifyApp", "Query failure", error)
+//        );
+//        return listOfTasks;
     }
 
     private void creatTeams(){

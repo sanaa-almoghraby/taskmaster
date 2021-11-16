@@ -6,9 +6,6 @@ subscription OnCreateTask {
     title
     body
     state
-    _version
-    _deleted
-    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -20,9 +17,6 @@ subscription OnUpdateTask {
     title
     body
     state
-    _version
-    _deleted
-    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -34,9 +28,6 @@ subscription OnDeleteTask {
     title
     body
     state
-    _version
-    _deleted
-    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -52,18 +43,11 @@ subscription OnCreateTeam {
         title
         body
         state
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
-      startedAt
     }
-    _version
-    _deleted
-    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -79,18 +63,11 @@ subscription OnUpdateTeam {
         title
         body
         state
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
-      startedAt
     }
-    _version
-    _deleted
-    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -106,18 +83,11 @@ subscription OnDeleteTeam {
         title
         body
         state
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
-      startedAt
     }
-    _version
-    _deleted
-    _lastChangedAt
     createdAt
     updatedAt
   }
