@@ -16,57 +16,82 @@
         android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/title"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.121"
+        app:layout_constraintHorizontal_bias="0.173"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.603" />
 
     <TextView
         android:id="@+id/title"
         android:layout_width="287dp"
         android:layout_height="69dp"
         android:layout_marginStart="44dp"
-        android:layout_marginTop="76dp"
         android:layout_marginEnd="283dp"
 
-        android:layout_marginBottom="51dp"
         android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/body"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.805"
         tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/body"
-        android:layout_width="279dp"
-        android:layout_height="67dp"
+        android:layout_width="300dp"
+        android:layout_height="55dp"
         android:layout_marginStart="52dp"
 
-        android:layout_marginTop="53dp"
+        android:layout_marginTop="228dp"
         android:layout_marginEnd="80dp"
-        android:layout_marginBottom="264dp"
         android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/state"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.38"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/state"
         android:layout_width="274dp"
         android:layout_height="69dp"
         android:layout_marginStart="56dp"
-        android:layout_marginTop="75dp"
         android:layout_marginEnd="81dp"
 
-        android:layout_marginBottom="68dp"
+        android:layout_marginBottom="36dp"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/body"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/taskImageDetail"
+        app:layout_constraintVertical_bias="0.666" />
 
+    <ImageView
+        android:id="@+id/taskImageDetail"
+        android:layout_width="166dp"
+        android:layout_height="175dp"
+        android:layout_marginTop="36dp"
+
+        android:contentDescription="@string/todo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fileLinkDetail"
+        app:srcCompat="@drawable/empty_image" />
+
+    <TextView
+        android:id="@+id/fileLinkDetail"
+        android:layout_width="295dp"
+        android:layout_height="67dp"
+        android:text="@string/download_the_linked_file"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.531"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="302dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

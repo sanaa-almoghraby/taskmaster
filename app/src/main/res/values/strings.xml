@@ -19,4 +19,6 @@
 
     <string name="title">title</string>
     <string name="body">/body</string>
+    <string name="todo" />
+    <string name="download_the_linked_file" />
 </resources>

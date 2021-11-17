@@ -30,6 +30,7 @@ import com.amplifyframework.api.aws.AWSApiPlugin;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Team;
+import com.amplifyframework.storage.s3.AWSS3StoragePlugin;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -60,9 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
 // farh       SharedPreferences sharedPreferences2 = getSharedPreferences("MyPref", 0);
 //    farh    String settingsTeamID = sharedPreferences2.getString("Team",null);
-
         RecyclerView tasksListRecyclerView = findViewById(R.id.recyclerView);
-
 
 //        if (settingsTeamID == null){
 //            tasks=GetData(tasksListRecyclerView);
@@ -85,11 +84,6 @@ public class MainActivity extends AppCompatActivity {
         tasksListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         tasksListRecyclerView.setAdapter(new TaskAdapter(tasks));
 //        Log.i("TeamID", "Settings Team ID ===> " + settingsTeamID);
-
-
-
-
-
 
 
         Button allTaskButton = findViewById(R.id.button2);
@@ -162,8 +156,11 @@ public class MainActivity extends AppCompatActivity {
             Amplify.addPlugin(new AWSDataStorePlugin());
             Amplify.addPlugin(new AWSApiPlugin());
             Amplify.addPlugin(new AWSCognitoAuthPlugin());
-
+            Amplify.addPlugin(new AWSS3StoragePlugin());
             Amplify.configure(getApplicationContext());
+
+
+
             Log.i("Main", "Initialized Amplify");
         } catch (AmplifyException error) {
             Log.e("Main", "Could not initialize Amplify", error);
