@@ -43,5 +43,11 @@
         ]
       }
     }
+  },
+  "storage": {
+    "s35ed7babe": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation"
+    }
   }
 }

@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.amplifyframework.datastore.generated.model.Task;
 
 import java.util.ArrayList;
@@ -51,9 +53,22 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             public void onClick(View view) {
                 Log.d("my Adapter", "Element " + viewHolder.getAdapterPosition() + " clicked");
 
-                String Task1 = viewHolder.textViewTitle.getText().toString();
-                editor.putString("TaskName", Task1);
+                Toast.makeText(context,"Submitted!", Toast.LENGTH_SHORT).show();
+                String title =viewHolder.textViewTitle.getText().toString();
+                editor.putString("title", title);
+                String body =viewHolder.textViewBody.getText().toString();
+                editor.putString("body", body);
+                String state =viewHolder.textViewState.getText().toString();
+                editor.putString("state", state);
+                String name=task.getFileName();
+                editor.putString("Filename",name);
                 editor.apply();
+
+
+//                String Task1 = viewHolder.textViewTitle.getText().toString();
+//                editor.putString("TaskName", Task1);
+//                editor.apply();
+
                 Intent gotToStd = new Intent(context, Task_Detail.class);
                 context.startActivity(gotToStd);
 
