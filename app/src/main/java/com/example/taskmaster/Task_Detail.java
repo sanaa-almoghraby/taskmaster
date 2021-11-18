@@ -31,10 +31,10 @@ public class Task_Detail extends AppCompatActivity {
 //        taskTitle.setText(taskName);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-        String title = sharedPreferences.getString("title", "title");
-        String body = sharedPreferences.getString("body", "body");
-        String state = sharedPreferences.getString("state", "state");
-        String filename = sharedPreferences.getString("Filename", "");
+        String title = intent.getExtras().getString("title", "title");
+        String body = intent.getExtras().getString("body", "body");
+        String state = intent.getExtras().getString("state", "state");
+        String filename = intent.getExtras().getString("Filename", "Filename");
 
         TextView textView =findViewById(R.id.title);
         TextView bodyView =findViewById(R.id.body);
@@ -44,38 +44,40 @@ public class Task_Detail extends AppCompatActivity {
         bodyView.setText("Task Body:  "+body);
         stateView.setText("Task State:  "+state);
 
-        TextView fileLinkDetail = findViewById(R.id.fileLinkDetail);
-        fileLinkDetail.setOnClickListener(view -> {
-            Intent i = new Intent(Intent.ACTION_VIEW);
-            i.setData(Uri.parse(fileURL));
-            startActivity(i);
-        });
-        if (filename != null) {
+        ImageView taskImageDetail = findViewById(R.id.taskImageDetail);
+        Picasso.get().load(filename).into(taskImageDetail);
 
-            Amplify.Storage.getUrl(
-                    filename,
-                    result -> {
-                        Log.i("MyAmplifyApp", "Successfully generated: " + result.getUrl());
-                        runOnUiThread(() -> {
-                            if (filename.endsWith("png")
-                                    || filename.endsWith("jpg")
-                                    || filename.endsWith("jpeg")
-                                    || filename.endsWith("gif")) {
-                                ImageView taskImageDetail = findViewById(R.id.taskImageDetail);
-                                System.out.println(result.getUrl());
-                                Picasso.get().load(String.valueOf(result.getUrl())).into(taskImageDetail);
-
-                                taskImageDetail.setVisibility(View.VISIBLE);
-                            } else {
-                                fileURL = String.valueOf(result.getUrl());
-//                                String link = "<a href=\""+ result.getUrl() + "\">Download the linked file</a>";
-                                fileLinkDetail.setVisibility(View.VISIBLE);
-                            }
-                        });
-                    },
-                    error -> Log.e("MyAmplifyApp", "URL generation failure", error)
-            );
-        }
+//        TextView fileLinkDetail = findViewById(R.id.fileLinkDetail);
+//        fileLinkDetail.setOnClickListener(view -> {
+//            Intent i = new Intent(Intent.ACTION_VIEW);
+//            i.setData(Uri.parse(fileURL));
+//            startActivity(i);
+//        });
+//        if (filename != null) {
+//
+//            Amplify.Storage.getUrl(
+//                    filename,
+//                    result -> {
+//                        Log.i("MyAmplifyApp", "Successfully generated: " + result.getUrl());
+//                        runOnUiThread(() -> {
+//                            if (filename.endsWith("png")
+//                                    || filename.endsWith("jpg")
+//                                    || filename.endsWith("jpeg")
+//                                    || filename.endsWith("gif")) {
+//
+//
+//                                taskImageDetail.setVisibility(View.VISIBLE);
+//                            } else {
+//                                System.out.println("test img");
+//                                fileURL = String.valueOf(result.getUrl());
+////                                String link = "<a href=\""+ result.getUrl() + "\">Download the linked file</a>";
+//                                fileLinkDetail.setVisibility(View.VISIBLE);
+//                            }
+//                        });
+//                    },
+//                    error -> Log.e("MyAmplifyApp", "URL generation failure", error)
+//            );
+//        }
     }
 
 
