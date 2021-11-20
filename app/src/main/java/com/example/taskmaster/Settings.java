@@ -9,13 +9,16 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.amplifyframework.analytics.AnalyticsEvent;
+import com.amplifyframework.core.Amplify;
+
 public class Settings extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-
+        recordEvents();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -46,5 +49,14 @@ public class Settings extends AppCompatActivity {
             editor.apply();
             System.out.println(id+"id *********************");
         }));
+    }
+    public void recordEvents() {
+        AnalyticsEvent event = AnalyticsEvent.builder()
+                .name("PasswordReset")
+                .addProperty("Channel", "SMS")
+                .addProperty("Successful", true)
+                .addProperty("ProcessDuration", 792)
+                .addProperty("UserAge", 120.3).build();
+        Amplify.Analytics.recordEvent(event);
     }
 }

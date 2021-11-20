@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amplifyframework.analytics.AnalyticsEvent;
 import com.amplifyframework.core.Amplify;
 import com.squareup.picasso.Picasso;
 
@@ -23,7 +24,7 @@ public class Task_Detail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_detail);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        recordEvents();
 
         Intent intent = getIntent();
 //        String taskName = intent.getExtras().getString("taskName");
@@ -80,7 +81,15 @@ public class Task_Detail extends AppCompatActivity {
 //        }
     }
 
-
+    public void recordEvents() {
+        AnalyticsEvent event = AnalyticsEvent.builder()
+                .name("PasswordReset")
+                .addProperty("Channel", "SMS")
+                .addProperty("Successful", true)
+                .addProperty("ProcessDuration", 792)
+                .addProperty("UserAge", 120.3).build();
+        Amplify.Analytics.recordEvent(event);
+    }
 
 }
 //    @Override

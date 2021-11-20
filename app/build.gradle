@@ -64,4 +64,5 @@ dependencies {
 
     implementation 'com.amazonaws:aws-android-sdk-pinpoint:2.36.0'
     implementation 'com.amazonaws:aws-android-sdk-mobile-client:2.36.0'
+    implementation 'com.amplifyframework:aws-analytics-pinpoint:1.29.1'
 }

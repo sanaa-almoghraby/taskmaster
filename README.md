@@ -161,3 +161,10 @@ Allow users to log out of your application.
 ![image description](screenshots/lab38a.png)
 
 ![image description](screenshots/lab38b.png)
+*****************************************************************************************************
+## Lab: 39 - Review
+
+### Tracking Users
+* Add Analytics to your amplify project. Create and send an Event whenever you launch intents that start new activities.
+![image description](screenshots/lab39.png)
+

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.amplifyframework.analytics.AnalyticsEvent;
 import com.amplifyframework.auth.AuthException;
 import com.amplifyframework.auth.result.AuthSignInResult;
 import com.amplifyframework.auth.result.AuthSignUpResult;
@@ -23,6 +24,7 @@ public class EmailConfirmActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_email_confirm);
+        recordEvents();
     }
     public void onConfirmButtonPressed(View view) {
 
@@ -91,5 +93,13 @@ public class EmailConfirmActivity extends AppCompatActivity {
     private String getEmail() {
         return getIntent().getStringExtra("email");
     }
-
+    public void recordEvents() {
+        AnalyticsEvent event = AnalyticsEvent.builder()
+                .name("PasswordReset")
+                .addProperty("Channel", "SMS")
+                .addProperty("Successful", true)
+                .addProperty("ProcessDuration", 792)
+                .addProperty("UserAge", 120.3).build();
+        Amplify.Analytics.recordEvent(event);
+    }
 }

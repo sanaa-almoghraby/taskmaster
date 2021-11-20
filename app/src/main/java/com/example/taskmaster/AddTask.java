@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -25,6 +26,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
+
+import com.amplifyframework.analytics.AnalyticsEvent;
 import com.amplifyframework.datastore.generated.model.Task;
 
 import com.amplifyframework.api.graphql.model.ModelMutation;
@@ -47,7 +50,7 @@ public class AddTask extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        recordEvents();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -81,14 +84,14 @@ public class AddTask extends AppCompatActivity {
         addTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View V) {
-                EditText title=findViewById(R.id.titleplain);
-                String addTitle=title.getText().toString();
+                EditText title = findViewById(R.id.titleplain);
+                String addTitle = title.getText().toString();
 
-                EditText body=findViewById(R.id.descripton);
-                String addBody=body.getText().toString();
+                EditText body = findViewById(R.id.descripton);
+                String addBody = body.getText().toString();
 
-                EditText state=findViewById(R.id.Status);
-                String addState=state.getText().toString();
+                EditText state = findViewById(R.id.Status);
+                String addState = state.getText().toString();
 
 
                 RadioButton b1 = findViewById(R.id.team1);
@@ -103,9 +106,9 @@ public class AddTask extends AppCompatActivity {
                 } else if (b3.isChecked()) {
                     id = "3";
                 }
-                String url = sharedPreferences.getString("fileUrl","null");
+                String url = sharedPreferences.getString("fileUrl", "null");
                 Log.i("onChooseFile", "onClick: ========>" + url);
-                dataStore(addTitle, addBody, addState, id,url);
+                dataStore(addTitle, addBody, addState, id, url);
 
 
                 Intent intent = new Intent(AddTask.this, MainActivity.class);
@@ -125,7 +128,8 @@ public class AddTask extends AppCompatActivity {
             }
         });
     }
-    private void dataStore(String title, String body, String state,String id,String url) {
+
+    private void dataStore(String title, String body, String state, String id, String url) {
 
         Task task = Task.builder().teamId(id).title(title).body(body).state(state).fileName(url).build();
         Amplify.API.mutate(
@@ -163,12 +167,13 @@ public class AddTask extends AppCompatActivity {
                 success -> {
                     Log.i("onChooseFile", "uploadFileToS3: succeeded " + success.getKey());
                     Amplify.Storage.getUrl(success.getKey(),
-                            urlSuccess->{
+                            urlSuccess -> {
                                 Log.i("onChooseFile", "onChooseFile: " + urlSuccess.getUrl().toString());
-                                sharedPreferences.edit().putString("fileUrl",urlSuccess.getUrl().toString()).apply();
+                                sharedPreferences.edit().putString("fileUrl", urlSuccess.getUrl().toString()).apply();
                             },
-                            urlError->{});
-                    },
+                            urlError -> {
+                            });
+                },
                 error -> Log.e("onChooseFile", "uploadFileToS3: failed " + error.toString())
         );
         uploadedFileNames = uploadedFileName;
@@ -187,5 +192,15 @@ public class AddTask extends AppCompatActivity {
         }
 
         return extension;
+    }
+
+    public void recordEvents() {
+        AnalyticsEvent event = AnalyticsEvent.builder()
+                .name("Launch Add Task Activity ")
+                .addProperty("Channel", "SMS")
+                .addProperty("Successful", true)
+                .addProperty("ProcessDuration", 792)
+                .addProperty("UserAge", 120.3).build();
+        Amplify.Analytics.recordEvent(event);
     }
 }
