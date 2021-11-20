@@ -154,3 +154,10 @@ Allow users to log out of your application.
 
 ### AWS S3
 ![image description](screenshots/lab37d.png)
+***********************************************************************************************
+## Lab 38:  Notifications
+### Add Task Activity
+
+![image description](screenshots/lab38a.png)
+
+![image description](screenshots/lab38b.png)

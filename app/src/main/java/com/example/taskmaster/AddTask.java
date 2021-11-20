@@ -1,5 +1,6 @@
 package com.example.taskmaster;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -11,10 +12,12 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
@@ -32,6 +35,7 @@ import org.apache.commons.io.FileUtils;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class AddTask extends AppCompatActivity {
@@ -58,6 +62,7 @@ public class AddTask extends AppCompatActivity {
                         }
                     }
                 });
+
         findViewById(R.id.btnUploadFile).setOnClickListener(view -> {
             Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
             chooseFile.setType("*/*");
@@ -72,7 +77,7 @@ public class AddTask extends AppCompatActivity {
         });
 
         Button addTaskButton = findViewById(R.id.button3);
-
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         addTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View V) {
@@ -98,8 +103,9 @@ public class AddTask extends AppCompatActivity {
                 } else if (b3.isChecked()) {
                     id = "3";
                 }
-
-                dataStore(addTitle, addBody, addState, id);
+                String url = sharedPreferences.getString("fileUrl","null");
+                Log.i("onChooseFile", "onClick: ========>" + url);
+                dataStore(addTitle, addBody, addState, id,url);
 
 
                 Intent intent = new Intent(AddTask.this, MainActivity.class);
@@ -119,8 +125,9 @@ public class AddTask extends AppCompatActivity {
             }
         });
     }
-    private void dataStore(String title, String body, String state,String id) {
-        Task task = Task.builder().teamId(id).title(title).body(body).state(state).build();
+    private void dataStore(String title, String body, String state,String id,String url) {
+
+        Task task = Task.builder().teamId(id).title(title).body(body).state(state).fileName(url).build();
         Amplify.API.mutate(
                 ModelMutation.create(task),
                 response -> Log.i("MyAmplifyApp", "Added Todo with id: " + response.getData().getId()),
@@ -137,10 +144,12 @@ public class AddTask extends AppCompatActivity {
             uri = activityResult.getData().getData();
         }
         assert uri != null;
-        String uploadedFileName = new Date().toString() + "." + getMimeType(getApplicationContext(), uri);
-
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat("dd_MM_yyyy_HH_mm_ss");
+        Date date = new Date();
+        String uploadedFileName = formatter.format(date) + "." + getMimeType(getApplicationContext(), uri);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         File uploadFile = new File(getApplicationContext().getFilesDir(), "uploadFile");
-
+        Log.i("URI", "onChooseFile: URI =>>>>" + uri);
         try {
             InputStream inputStream = getContentResolver().openInputStream(uri);
             FileUtils.copyToFile(inputStream, uploadFile);
@@ -151,7 +160,15 @@ public class AddTask extends AppCompatActivity {
         Amplify.Storage.uploadFile(
                 uploadedFileName,
                 uploadFile,
-                success -> Log.i("onChooseFile", "uploadFileToS3: succeeded " + success.getKey()),
+                success -> {
+                    Log.i("onChooseFile", "uploadFileToS3: succeeded " + success.getKey());
+                    Amplify.Storage.getUrl(success.getKey(),
+                            urlSuccess->{
+                                Log.i("onChooseFile", "onChooseFile: " + urlSuccess.getUrl().toString());
+                                sharedPreferences.edit().putString("fileUrl",urlSuccess.getUrl().toString()).apply();
+                            },
+                            urlError->{});
+                    },
                 error -> Log.e("onChooseFile", "uploadFileToS3: failed " + error.toString())
         );
         uploadedFileNames = uploadedFileName;
