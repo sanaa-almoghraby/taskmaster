@@ -24,6 +24,7 @@ import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
@@ -46,7 +47,7 @@ public class AddTask extends AppCompatActivity {
     String img = "";
     private String uploadedFileNames;
     ActivityResultLauncher<Intent> someActivityResultLauncher;
-
+    ImageView image;
     @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +66,20 @@ public class AddTask extends AppCompatActivity {
                         }
                     }
                 });
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        String type = intent.getType();
+        image = findViewById(R.id.imageView_showFromS3);
+        if (Intent.ACTION_SEND.equals(action) && type != null) {
+            if (type.startsWith("image/")) {
+                Uri imageUri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
+                if (imageUri != null) {
+                    image.setImageURI(imageUri);
+                    image.setVisibility(View.VISIBLE);
+                }
+            }
+        }
+
 
         findViewById(R.id.btnUploadFile).setOnClickListener(view -> {
             Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
@@ -127,6 +142,9 @@ public class AddTask extends AppCompatActivity {
 //                                "++++++++++++++++++++++++++++++++++++++++++++++++++");
             }
         });
+
+
+
     }
 
     private void dataStore(String title, String body, String state, String id, String url) {

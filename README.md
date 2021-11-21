@@ -167,4 +167,12 @@ Allow users to log out of your application.
 ### Tracking Users
 * Add Analytics to your amplify project. Create and send an Event whenever you launch intents that start new activities.
 ![image description](screenshots/lab39.png)
+************************************************************************************************
+
+## Lab: 41 - Intent Filters
+### Adding a Task from Another Application
+Add an intent filter to your application such that a user can hit the “share” button on an image in another application, choose TaskMaster as the app to share that image with,
+and be taken directly to the Add a Task activity with that image pre-selected.
+ ![image description](screenshots/lab41a.png)
+ ![image description](screenshots/lab41b.png)
 
