@@ -175,4 +175,13 @@ Add an intent filter to your application such that a user can hit the â€œshareâ€
 and be taken directly to the Add a Task activity with that image pre-selected.
  ![image description](screenshots/lab41a.png)
  ![image description](screenshots/lab41b.png)
+************************************************************************************************
+## Lab 43: Analytics with Pinpoint
+### Analytics
+Using Amplify and Pinpoint, add session analytics to your application.
 
+### Stretch Goals
+Add analytics for how often users open your Add a Task activity, or how often they open any activity in your application.
+
+
+ ![image description](screenshots/lab43.png)
